@@ -73,6 +73,21 @@ command.shell = function(input=null)
     pipe = []  // pipe control, do not edit
     prompt = [] // prompt control, do not edit
     next = [] // pipe control, do not edit
+
+/////////////// CUSTOM FUNCTIONS /////////////////
+
+string.colorize = function(self, color)
+    return "<color=" + color + ">" + self + "</color>"
+end function
+
+string.boldify = function(self)
+    return "<b>" + self + "</b>"
+end function
+
+///////////// END CUSTOM FUCNTIONS ///////////////
+
+
+    line_color = null
     prompt = active_user + "@" + get_shell.host_computer.get_name + ":"
     pwd = current_path
     pwd = pwd.replace(home_dir, "~")
@@ -84,6 +99,12 @@ command.shell = function(input=null)
     end if
     // YOUR PROMPT, edit to your liking /// updated to include get_name /////////////////////////////// THEME CONFIG TARGET
     bang = "[" + prompt + "] " + prompt_terminator + " " 
+    if active_user == "root" then
+        bang = bang.colorize("#e22323").boldify
+    else if active_user != "guest" then
+        bang = bang.colorize("#ddd").boldify
+    end if
+
     if full_prompt then bang = globals.checkUser(shell)+"@"+globals.localmachine.get_name+":"+globals.currentPath+"|> " // stock FULLPROMPT, edit to your liking
     if globals.GLASSPOOL then bang = colorLightBlue+bang.trim+CT+" " // GLASSPOOL PROMPT, edit to your liking
     if input then prompt = input.split(" ") else prompt = user_input(bang).split(" ")
@@ -288,19 +309,6 @@ command.quit(command.shell)
 end while
 ////end main////
 //////////end of do not edit section//////////////
-
-
-/////////////// CUSTOM FUNCTIONS /////////////////
-
-string.colorize = function(self, color)
-    return "<color=" + color + ">" + self + "</color>"
-end function
-
-string.boldify = function(self)
-    return "<b>" + self + "</b>"
-end function
-
-///////////// END CUSTOM FUCNTIONS ///////////////
 
 
 ///EOF///
