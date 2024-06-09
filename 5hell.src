@@ -57,7 +57,7 @@ import_code("/root/src/5hell.5pk")
 //-- skipping this configuration means you can't use the transmit command. up to you.
 //// important: don't comment it out, just leave at default values if you aren't going to use it.
 // edit the below line to include the credentials for your (ssh) hashim server. the transmit command will use this information to connect.
-globals.HOME_SERVER = ["ip", 22, "root", "password", "ssh or ftp", "/path/to/pass (default: /root/pass)"] // port should be int, not string!
+globals.HOME_SERVER = ["211.175.116.121", 22, "root", "xbcRYUxyZ8grQ1l", "ssh", "/root/pass"] // port should be int, not string!
 //////// an ftp server can be more secure than a ssh server when running a hashim -d server ///////
 /////// ALWAYS USE A PASSWORD / ACCESS CODE (see the SECURITY SECTION BELLOW command.shell) WHEN USING HOME_SERVER!!!!! ////////////////////////////////
 ////// END @HOME CONFIGURATION//////////////////////////////////////////////////
@@ -73,7 +73,17 @@ command.shell = function(input=null)
     pipe = []  // pipe control, do not edit
     prompt = [] // prompt control, do not edit
     next = [] // pipe control, do not edit
-    bang = "|> " // YOUR PROMPT, edit to your liking /// updated to include get_name /////////////////////////////// THEME CONFIG TARGET
+    prompt = active_user + "@" + get_shell.host_computer.get_name + ":"
+    pwd = current_path
+    pwd = pwd.replace(home_dir, "~")
+    prompt = prompt + pwd
+    if active_user == "root" then
+        prompt_terminator = "#"
+    else
+        prompt_terminator = "$"
+    end if
+    // YOUR PROMPT, edit to your liking /// updated to include get_name /////////////////////////////// THEME CONFIG TARGET
+    bang = "[" + prompt + "] " + prompt_terminator + " " 
     if full_prompt then bang = globals.checkUser(shell)+"@"+globals.localmachine.get_name+":"+globals.currentPath+"|> " // stock FULLPROMPT, edit to your liking
     if globals.GLASSPOOL then bang = colorLightBlue+bang.trim+CT+" " // GLASSPOOL PROMPT, edit to your liking
     if input then prompt = input.split(" ") else prompt = user_input(bang).split(" ")
@@ -217,7 +227,7 @@ end function
 //
 //////////////////////////////////// SECURITY GOES HERE //////////////////////
 ///// customize this line fully for the most security ////////
-access_codes = {"Alpha":"your access code here", "Beta":"your other access code here"}//////////////////////////////////////////////////////////////
+access_codes = {"Alpha":"g0fuckyourself!"}//////////////////////////////////////////////////////////////
 // if you rename access_codes be sure to edit the below line
 rnac = access_codes.indexes
 rnac.shuffle
