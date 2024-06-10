@@ -74,19 +74,6 @@ command.shell = function(input=null)
     prompt = [] // prompt control, do not edit
     next = [] // pipe control, do not edit
 
-/////////////// CUSTOM FUNCTIONS /////////////////
-
-string.colorize = function(self, color)
-    return "<color=" + color + ">" + self + "</color>"
-end function
-
-string.boldify = function(self)
-    return "<b>" + self + "</b>"
-end function
-
-///////////// END CUSTOM FUCNTIONS ///////////////
-
-
     line_color = null
     prompt = active_user + "@" + get_shell.host_computer.get_name + ":"
     pwd = current_path
@@ -248,15 +235,45 @@ end function
 //
 //////////////////////////////////// SECURITY GOES HERE //////////////////////
 ///// customize this line fully for the most security ////////
-access_codes = {"Alpha":"g0fuckyourself!"}//////////////////////////////////////////////////////////////
+
+string.colorize = function(self, color)
+    return "<color=" + color + ">" + self + "</color>"
+end function
+
+string.boldify = function(self)
+    return "<b>" + self + "</b>"
+end function
+
+access_codes = {"Alpha":"g0fuckyourself!"}
 // if you rename access_codes be sure to edit the below line
 rnac = access_codes.indexes
 rnac.shuffle
 rnac = rnac.pop
-if user_input(colorCyan+"Cyberdeck Authentication Code ["+colorWhite+rnac+colorCyan+"]: "+CT,1,0) != access_codes[rnac] then
-  wait(300)
-  exit("frag off, chumba")
-end if
+
+try_count = 0
+max_tries = 3
+while try_count < max_tries
+    if user_input(colorCyan+"Cyberdeck Authentication Code ["+colorWhite+rnac+colorCyan+"]: "+CT,1,0) != access_codes[rnac] then
+        try_count = try_count + 1
+        wait_time = 30
+        wait(wait_time)
+        admonish_count = 0
+        admonish_max = 3
+        while admonish_count < admonish_max
+            nedry = "<b>AH AH AH!! YOU DIDN'T SAY THE MAGIC WORD!! AH AH AH!!</b>" 
+            print(nedry.colorize("#e93a3a"))
+            wait(2)
+            admonish_count = admonish_count + 1
+        end while
+        if try_count == max_tries then 
+            print
+            exit("<b>Fuck off, skiddie!</b>".colorize("#f00"))
+        end if
+    else
+        break
+    end if
+end while
+
 /////////////////END SECURITY///////////////////
 //
 //
