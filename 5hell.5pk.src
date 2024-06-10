@@ -291,6 +291,9 @@ clip_board_delta = "" // for do
 
 instance = localmachine.File(program_path)
 
+// custom library
+import_code("/root/src/custom.5pk")
+
 // import 5phinx -- this contains critical shared functions and the backbone of the hacking suite
 import_code("/root/src/5phinx.5pk")
 
