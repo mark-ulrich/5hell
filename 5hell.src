@@ -236,14 +236,6 @@ end function
 //////////////////////////////////// SECURITY GOES HERE //////////////////////
 ///// customize this line fully for the most security ////////
 
-string.colorize = function(self, color)
-    return "<color=" + color + ">" + self + "</color>"
-end function
-
-string.boldify = function(self)
-    return "<b>" + self + "</b>"
-end function
-
 access_codes = {"Alpha":"g0fuckyourself!"}
 // if you rename access_codes be sure to edit the below line
 rnac = access_codes.indexes

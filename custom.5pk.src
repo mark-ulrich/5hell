@@ -1,0 +1,8 @@
+string.colorize = function(self, color)
+    return "<color=" + color + ">" + self + "</color>"
+end function
+
+string.boldify = function(self)
+    return "<b>" + self + "</b>"
+end function
+
